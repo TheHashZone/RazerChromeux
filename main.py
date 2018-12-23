@@ -8,7 +8,10 @@ colours = {
 }
 
 class start:
+	
 	os.system("clear")
+
+	end = " > /sys/bus/hid/drivers/razerkbd/0003:1532:0203.0006/matrix_effect_static"
 
 	banner = '''\n
 	8b,dPPYba, ,adPPYYba, 888888888  ,adPPYba, 8b,dPPYba,  
@@ -27,29 +30,31 @@ class start:
 
 	print(choice)
 
+class check:
+
 	def dirCheck():
 		try:
-			end = " > /sys/bus/hid/drivers/razerkbd/0003:1532:0203.0006/matrix_effect_static"
 			os.chdir("/sys/bus/hid/drivers/razerkbd/0003:1532:0203.0006")
 
 		except FileNotFoundError:
-			end = " > /sys/bus/hid/drivers/razerkbd/0003:1532:0203.0003/matrix_effect_static"
+			start.end = " > /sys/bus/hid/drivers/razerkbd/0003:1532:0203.0003/matrix_effect_static"
 
-		return end
+		return start.end
 
-def main():
+class program:
+	def main():
 
-	end = start.dirCheck()
+		end = check.dirCheck()
 
-	userIn = input(">> ")
+		userIn = input(">> ")
 
-	try:
-		colours[userIn]
-		os.system(f"sudo echo -n -e {colours[userIn]} {end}")
+		try:
+			colours[userIn]
+			os.system(f"sudo echo -n -e {colours[userIn]} {end}")
 
-	except KeyError:
-		print("Not a valid colour!")
+		except KeyError:
+			print("Not a valid colour!")
 
 
-if __name__ == "__main__":
-    main() 
+	if __name__ == "__main__":
+	    main() 
